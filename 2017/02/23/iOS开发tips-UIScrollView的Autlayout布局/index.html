@@ -24,7 +24,8 @@
 <meta property="og:description" content="UIScrollViewj尽管继承于UIView，但它是一个相对比较特殊的视图，特别是当它遇到了AutoLayout之后。在UIScrollView中使用AutoLayout的目的除了使用相对约束确定子控件的位置和大小外，更重要的是如何自动计算出UIScrollView的contentSize（关于使用UIScrollView并且最终手动指定contentSize的AutoLayout用法不再今天">
 <meta property="og:image" content="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/UIScrollViewLayout.png">
 <meta property="og:image" content="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/ShareExtension.gif">
-<meta property="og:updated_time" content="2017-02-23T07:07:30.000Z">
+<meta property="og:image" content="http://yoursite.com/iOS开发tips-UIScrollView的Autlayout布局/ShareExtension.gif">
+<meta property="og:updated_time" content="2017-02-23T07:10:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui's Blog">
 <meta name="twitter:description" content="UIScrollViewj尽管继承于UIView，但它是一个相对比较特殊的视图，特别是当它遇到了AutoLayout之后。在UIScrollView中使用AutoLayout的目的除了使用相对约束确定子控件的位置和大小外，更重要的是如何自动计算出UIScrollView的contentSize（关于使用UIScrollView并且最终手动指定contentSize的AutoLayout用法不再今天">
@@ -369,6 +370,7 @@ classes that you can use:
 
 }
 </code></pre><h3 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h3><img src="/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/ShareExtension.gif" alt="ShareExtension.gif" title="">
+<p><img src="/iOS开发tips-UIScrollView的Autlayout布局/ShareExtension.gif" alt=""></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实概括起来UIScrollView的布局最主要的问题就是解决contentSize的计算问题。而根据UIScrollView的特点contentSize的计算最终就是根据上下左右边距和子控件自身尺寸来反向推导出来的。在遇到多个子视图的情况下具体用不用容器视图根据情况而定，容器视图仅仅起到辅助作用，整个布局原理是完全相同的。使用UIScrollView的AutoLayout布局优点自不必多说，除了从frame计算中摆脱出来之外（绝对布局和相对布局的区别），天生支持屏幕旋转（屏幕的旋转适配只需要在布局时稍加注意即可），例如上面三个demo均支持竖屏和横屏查看，相对于frame布局代码简化了很多。</p>
 
   </section>
