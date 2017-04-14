@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      iOS开发tips-神奇的UITableView | Kenshin Cui&#39;s Blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="Kenshin Cui">
+    
+    
+
+    <meta name="description" content="#iOS开发tips-神奇的UITableView
+UITableView是iOS开发中使用频率最高的UI控件，在前面的文章中对于UITableView的具体用法有详细的描述，今天主要看一些UITableView开发中的常见一些坑，这些坑或许不深，但是如果开发中注意不到的话往往比较浪费时间。
+##神奇的section header
+事情的起因是一个网友说要实现一个类似下图界面，但是不管是设置sec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发tips-神奇的UITableView | Kenshin Cui's Blog">
+<meta property="og:url" content="http://yoursite.com/2017/04/15/2017-04-14/index.html">
+<meta property="og:site_name" content="Kenshin Cui's Blog">
+<meta property="og:description" content="#iOS开发tips-神奇的UITableView
+UITableView是iOS开发中使用频率最高的UI控件，在前面的文章中对于UITableView的具体用法有详细的描述，今天主要看一些UITableView开发中的常见一些坑，这些坑或许不深，但是如果开发中注意不到的话往往比较浪费时间。
+##神奇的section header
+事情的起因是一个网友说要实现一个类似下图界面，但是不管是设置sec">
+<meta property="og:image" content="http://yoursite.com/media/Blog_iOS_tTps_UITableView_UITableViewDemo1.png">
+<meta property="og:updated_time" content="2017-04-14T07:09:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发tips-神奇的UITableView | Kenshin Cui's Blog">
+<meta name="twitter:description" content="#iOS开发tips-神奇的UITableView
+UITableView是iOS开发中使用频率最高的UI控件，在前面的文章中对于UITableView的具体用法有详细的描述，今天主要看一些UITableView开发中的常见一些坑，这些坑或许不深，但是如果开发中注意不到的话往往比较浪费时间。
+##神奇的section header
+事情的起因是一个网友说要实现一个类似下图界面，但是不管是设置sec">
+<meta name="twitter:image" content="http://yoursite.com/media/Blog_iOS_tTps_UITableView_UITableViewDemo1.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Kenshin Cui&#39;s Blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          即便是别人看不到的地方, 对其工艺也必须尽心尽力。
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+    
+      <!-- Github -->
+      <li class="navigation__item">
+        <a href="https://github.com/kenshincui" title="Huno on GitHub">
+          <i class='icon icon-social-github'></i>
+          <span class="label">GitHub</span>
+        </a>
+      </li>
+    
+
+    <!-- China social icon -->
+    <!--
+    
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-douban'></i>
+          <span class="label">Douban</span>
+        </a>
+      </li>
+
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-weibo'></i>
+          <span class="label">Weibo</span>
+        </a>
+      </li>
+
+    -->
+
+
+
+  </ul>
+</nav>
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">iOS开发tips-神奇的UITableView</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-04-15" class="post-meta__date date">2017-04-15</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+            <font class="categories">
+            &#8226; 分类:
+            <a class="categories-link" href="/categories/iOS每日Tips/">iOS每日Tips</a>
+            </font>
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/UITableView/">UITableView</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>#iOS开发tips-神奇的UITableView</p>
+<p>UITableView是iOS开发中使用频率最高的UI控件，在前面的<a href="http://www.cnblogs.com/kenshincui/p/3931948.html" target="_blank" rel="external">文章</a>中对于UITableView的具体用法有详细的描述，今天主要看一些UITableView开发中的常见一些坑，这些坑或许不深，但是如果开发中注意不到的话往往比较浪费时间。</p>
+<p>##神奇的section header</p>
+<p>事情的起因是一个网友说要实现一个类似下图界面，但是不管是设置<strong>sectionHeaderHeight</strong>还是代理方法中实现<strong>func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int)</strong>都无法调整<strong>Section Header</strong>的默认高度。而且他还试过通过<strong>func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -&gt; UIView?</strong>自定义一个<strong>header</strong>也是无济于事。</p>
+<p><img src="/media/Blog_iOS_tTps_UITableView_UITableViewDemo1.png" alt="Blog_iOS_tTps_UITableView_UITableViewDemo1"></p>
+<p>其实这个问题解决起来并不复杂，只要设置<strong>sectionFooterHeight</strong>为0即可（当然对应通过代理方法也是可以的）。默认情况下分组样式UITableView的section header和section footer是由一个默认高度的，并不为0。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">let</span> <span class="type">ProfileTableViewControllerCellReuseIdentifier</span> = <span class="string">"ProfileTableViewCell"</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProfileTableViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Nested type</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ProfileData</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> title:<span class="type">String</span>!</span><br><span class="line">        <span class="keyword">var</span> content:<span class="type">String</span>!</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MARK: - TableView life cycle</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        <span class="keyword">self</span>.setup()</span><br><span class="line">        <span class="keyword">self</span>.loadData()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MARK: - Private method</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">setup</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.view.backgroundColor = <span class="type">UIColor</span>.gray</span><br><span class="line">        <span class="keyword">self</span>.tableView.register(<span class="type">ProfileTableViewCell</span>.<span class="keyword">self</span>, forCellReuseIdentifier: <span class="type">ProfileTableViewControllerCellReuseIdentifier</span>)</span><br><span class="line">        <span class="keyword">self</span>.tableView.dataSource = <span class="keyword">self</span></span><br><span class="line">        <span class="keyword">self</span>.tableView.delegate = <span class="keyword">self</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.view.addSubview(<span class="keyword">self</span>.tableView)</span><br><span class="line">        <span class="keyword">self</span>.tableView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.edges.equalTo(<span class="number">0.0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">loadData</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.data.removeAll()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row1 = <span class="type">ProfileData</span>(title: <span class="string">"Name"</span>, content: <span class="string">"Kenshin Cui"</span>)</span><br><span class="line">        <span class="keyword">let</span> row2 = <span class="type">ProfileData</span>(title: <span class="string">"ID"</span>, content: <span class="string">"kenshincui"</span>)</span><br><span class="line">        <span class="keyword">let</span> section1 = [row1,row2]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row3 = <span class="type">ProfileData</span>(title: <span class="string">"Gender"</span>, content: <span class="string">"Male"</span>)</span><br><span class="line">        <span class="keyword">let</span> row4 = <span class="type">ProfileData</span>(title: <span class="string">"Region"</span>, content: <span class="string">"China"</span>)</span><br><span class="line">        <span class="keyword">let</span> section2 = [row3,row4]</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row5 = <span class="type">ProfileData</span>(title: <span class="string">"What's Up"</span>, content: <span class="string">"We're here to put a dent in the universe。 Otherwise why else even be here？"</span>)</span><br><span class="line">        <span class="keyword">let</span> section3 = [row5]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.data.append(section1)</span><br><span class="line">        <span class="keyword">self</span>.data.append(section2)</span><br><span class="line">        <span class="keyword">self</span>.data.append(section3)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.tableView.reloadData()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Private property</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> tableView:<span class="type">UITableView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UITableView</span>(frame: <span class="type">CGRect</span>.zero, style: .grouped)</span><br><span class="line">        temp.estimatedRowHeight = <span class="number">50</span></span><br><span class="line">        temp.sectionFooterHeight = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    fileprivate <span class="keyword">var</span> data = [[<span class="type">ProfileData</span>]]()</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ProfileTableViewController</span>:<span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span></span>&#123;</span><br><span class="line">    <span class="comment">// MARK: - Table view data source</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">numberOfSections</span><span class="params">(<span class="keyword">in</span> tableView: UITableView)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.data.<span class="built_in">count</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> sectionData = <span class="keyword">self</span>.data[section]</span><br><span class="line">        <span class="keyword">return</span> sectionData.<span class="built_in">count</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, cellForRowAt indexPath: IndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> cell = tableView.dequeueReusableCell(withIdentifier: <span class="type">ProfileTableViewControllerCellReuseIdentifier</span>, <span class="keyword">for</span>: indexPath) <span class="keyword">as</span>? <span class="type">ProfileTableViewCell</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> dataItem = <span class="keyword">self</span>.data[indexPath.section][indexPath.row]</span><br><span class="line">            cell.title = dataItem.title</span><br><span class="line">            cell.content = dataItem.content</span><br><span class="line">            <span class="keyword">return</span> cell</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">UITableViewCell</span>()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MARK: - Table view delegate</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, heightForHeaderInSection section: Int)</span></span> -&gt; <span class="type">CGFloat</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> section == <span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">CGFloat</span>.leastNormalMagnitude</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">8.0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##数据源和代理方法的自动调用</p>
+<p>同样是上面的代码，如果去掉<strong>loadData()</strong>方法后面的<strong>reloadData()</strong>调用你会发现整个界面不会有任何异常现象，数据可以照样加载，也就是说数据源方法和代理方法会正常调用加载对应的数据。这是为什么呢？<br>事实上类似于<strong>func numberOfSections(in tableView: UITableView) -&gt; Int</strong>等方法并不是只有<strong>reloadData()</strong>等方法刷新的时候才会调用，而是在已经设置了dataSource和delegate后布局变化后就会调用。因此即使注释掉上面的<strong>reloadData()</strong>方法界面仍然不会有变化。<br>要验证这个结论可以延迟设置数据源和代理（注意：手动更新界面布局<em>setNeedsLayout</em>、<em>layoutIfNeeded</em>），或者最简单的方式就是旋转屏幕会发现<strong>func numberOfSections(in tableView: UITableView) -&gt; Int</strong>、<strong>func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat</strong>等方法都会调用。除此之外，你也会发现<strong>func numberOfSections(in tableView: UITableView) -&gt; Int</strong>其实并不止一次调用，系统内部为了确定整个布局本身对它就存在着调用。</p>
+<p>##分割线左侧对齐</p>
+<p>貌似苹果的设计分割就建议你将分割线左侧留出一定的间距，但在实际开发过程中却很少见设计师会这么做。要让分割线左侧对齐对于当前iOS 10来说应该是再简单不过，只要设置UITableView的<strong>separatorInset = UIEdgeInsets.zero</strong>即可（如果仅仅想要控制器某个UITableViewCell的分割线则直接设置UITableViewCell的separatorInset，当然这种方式对于<strong>.grouped</strong>风格的UITableView而言无法修改Section顶部和底部分割线）。不过低版本的iOS就要复杂一些，例如iOS 7除了以上设置还要设置UITableViewCell的<strong>separatorInset</strong>；而iOS 8、9还要再设置UITableView的<strong>layoutMargins</strong>等。</p>
+<blockquote>
+<p>当然，如果你希望控制右侧的间距，仍然可以调整<strong>separatorInset</strong>的right即可，不过调整top、bottom应该不会生效。</p>
+</blockquote>
+<p>##移除多余的行</p>
+<p>不妨将上面代码修改为<strong>.plain</strong>风格的UITableView，此时会发现由于数据后面多了很多多余的空行。移除这些空行的方法也很简单，那就是设置<strong>tableFooterView = UIView()</strong>即可(如果设置view的高度为CGFloat.leastNormalMagnitude则不显示最后面的一条分割线)。当然，默认情况下style为<strong>.plain</strong>则每个section的上下均不存在分割线。</p>
+<blockquote>
+<p>注意：.plain风格的UITableView设置sectionFooterHeight不起作用，必须通过<strong>func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -&gt; CGFloat</strong>代理方法设置。</p>
+</blockquote>
+<p>##.plain下禁用section header悬停</p>
+<p>有时候你不得不用<strong>.plain</strong> Style,因为这样一来默认Section Header就有悬停效果，但是有时候你只是想要使用<strong>.plain</strong>样式却不想显示悬停效果，这时你必须禁用这个效果。<br>当然可以使用很多黑科技来禁用悬停效果，但是最简单的方式应该是直接将header隐藏起来：通过设置tableViewHeader高度等同于section header的高度，然后设置tableView的<strong>contentInset</strong>让它偏移到上方，这样一来当滚动到section header悬浮时出现的位置不是0而是被隐藏起来的偏移位置。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">let</span> <span class="type">ProfileTableViewControllerCellReuseIdentifier</span> = <span class="string">"ProfileTableViewCell"</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProfileTableViewControllerWithPlain</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Nested type</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ProfileData</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> title:<span class="type">String</span>!</span><br><span class="line">        <span class="keyword">var</span> content:<span class="type">String</span>!</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MARK: - TableView life cycle</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        <span class="keyword">self</span>.setup()</span><br><span class="line">        <span class="keyword">self</span>.loadData()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MARK: - Private method</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">setup</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.view.backgroundColor = <span class="type">UIColor</span>.gray</span><br><span class="line">        <span class="keyword">self</span>.tableView.register(<span class="type">ProfileTableViewCell</span>.<span class="keyword">self</span>, forCellReuseIdentifier: <span class="type">ProfileTableViewControllerCellReuseIdentifier</span>)</span><br><span class="line">        <span class="keyword">self</span>.tableView.estimatedRowHeight = <span class="number">50</span></span><br><span class="line">        <span class="keyword">self</span>.tableView.dataSource = <span class="keyword">self</span></span><br><span class="line">        <span class="keyword">self</span>.tableView.delegate = <span class="keyword">self</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.view.addSubview(<span class="keyword">self</span>.tableView)</span><br><span class="line">        <span class="keyword">self</span>.tableView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.edges.equalTo(<span class="number">0.0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// disable section header sticky</span></span><br><span class="line">        <span class="keyword">let</span> headerView = <span class="type">UIView</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: <span class="number">375</span>, height: <span class="number">8.0</span>))</span><br><span class="line">        <span class="keyword">self</span>.tableView.tableHeaderView = headerView</span><br><span class="line">        <span class="keyword">self</span>.tableView.contentInset.top = -<span class="number">8.0</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">loadData</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.data.removeAll()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row1 = <span class="type">ProfileData</span>(title: <span class="string">"Name"</span>, content: <span class="string">"Kenshin Cui"</span>)</span><br><span class="line">        <span class="keyword">let</span> row2 = <span class="type">ProfileData</span>(title: <span class="string">"ID"</span>, content: <span class="string">"kenshincui"</span>)</span><br><span class="line">        <span class="keyword">let</span> section1 = [row1,row2]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row3 = <span class="type">ProfileData</span>(title: <span class="string">"Gender"</span>, content: <span class="string">"Male"</span>)</span><br><span class="line">        <span class="keyword">let</span> row4 = <span class="type">ProfileData</span>(title: <span class="string">"Region"</span>, content: <span class="string">"China"</span>)</span><br><span class="line">        <span class="keyword">let</span> section2 = [row3,row4]</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row5 = <span class="type">ProfileData</span>(title: <span class="string">"What's Up"</span>, content: <span class="string">"We're here to put a dent in the universe。 Otherwise why else even be here？"</span>)</span><br><span class="line">        <span class="keyword">let</span> section3 = [row5]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.data.append(section1)</span><br><span class="line">        <span class="keyword">self</span>.data.append(section2)</span><br><span class="line">        <span class="keyword">self</span>.data.append(section3)</span><br><span class="line">        </span><br><span class="line"><span class="comment">//        self.tableView.reloadData()</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Private property</span></span><br><span class="line">    fileprivate <span class="built_in">lazy</span> <span class="keyword">var</span> tableView:<span class="type">UITableView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UITableView</span>(frame: <span class="type">CGRect</span>.zero, style: .plain)</span><br><span class="line">        temp.estimatedRowHeight = <span class="number">50</span></span><br><span class="line">        temp.tableFooterView = <span class="type">UIView</span>()</span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    fileprivate <span class="keyword">var</span> data = [[<span class="type">ProfileData</span>]]()</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ProfileTableViewControllerWithPlain</span>:<span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span></span>&#123;</span><br><span class="line">    <span class="comment">// MARK: - Table view data source</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">numberOfSections</span><span class="params">(<span class="keyword">in</span> tableView: UITableView)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.data.<span class="built_in">count</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> sectionData = <span class="keyword">self</span>.data[section]</span><br><span class="line">        <span class="keyword">return</span> sectionData.<span class="built_in">count</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, cellForRowAt indexPath: IndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> cell = tableView.dequeueReusableCell(withIdentifier: <span class="type">ProfileTableViewControllerCellReuseIdentifier</span>, <span class="keyword">for</span>: indexPath) <span class="keyword">as</span>? <span class="type">ProfileTableViewCell</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> dataItem = <span class="keyword">self</span>.data[indexPath.section][indexPath.row]</span><br><span class="line">            cell.title = dataItem.title</span><br><span class="line">            cell.content = dataItem.content</span><br><span class="line">            <span class="keyword">return</span> cell</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">UITableViewCell</span>()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MARK: - Table view delegate</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, heightForHeaderInSection section: Int)</span></span> -&gt; <span class="type">CGFloat</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> section == <span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">CGFloat</span>.leastNormalMagnitude</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">8.0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##调整tableHeaderView的高度</p>
+<p>如果你的UITableView设置了tableHeaderView的话，有事你可能喜欢动态调整<strong>tableHeaderView</strong>的高度，但是怎么修改这个view的高度都不会生效。正确的修改方法是受限修改view的高度，然后将这个view重新设置给UITableView的tableHeaderView属性。下面的demo演示了这一过程，通过这个demo可以看到一个有趣的事实：如果你设置了tableHeaderView但是没有指定高度的话，UITableView会自动给他提供一个默认高度。这在低版本的iOS系统中即使不指定tableHeaderView也会有这个一个默认高度，解决方式就是设置view的高度为一个极小值，当然iOS 10中如果不指定则默认没有tableHeaderView。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">let</span> <span class="type">ProfileTableViewControllerCellReuseIdentifier</span> = <span class="string">"ProfileTableViewCell"</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProfileTableViewControllerWithHeader</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Nested type</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ProfileData</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> title:<span class="type">String</span>!</span><br><span class="line">        <span class="keyword">var</span> content:<span class="type">String</span>!</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - TableView life cycle</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        <span class="keyword">self</span>.setup()</span><br><span class="line">        <span class="keyword">self</span>.loadData()</span><br><span class="line">        <span class="keyword">self</span>.loadHeaderData()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Private method</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">setup</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.view.backgroundColor = <span class="type">UIColor</span>.gray</span><br><span class="line">        <span class="keyword">self</span>.tableView.tableHeaderView = <span class="keyword">self</span>.headerView</span><br><span class="line">        <span class="keyword">self</span>.tableView.register(<span class="type">ProfileTableViewCell</span>.<span class="keyword">self</span>, forCellReuseIdentifier: <span class="type">ProfileTableViewControllerCellReuseIdentifier</span>)</span><br><span class="line">        <span class="comment">//        self.tableView.separatorInset = UIEdgeInsets.zero</span></span><br><span class="line">        <span class="keyword">self</span>.tableView.dataSource = <span class="keyword">self</span></span><br><span class="line">        <span class="keyword">self</span>.tableView.delegate = <span class="keyword">self</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.view.addSubview(<span class="keyword">self</span>.tableView)</span><br><span class="line">        <span class="keyword">self</span>.tableView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.edges.equalTo(<span class="number">0.0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">loadData</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.data.removeAll()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row1 = <span class="type">ProfileData</span>(title: <span class="string">"Name"</span>, content: <span class="string">"Kenshin Cui"</span>)</span><br><span class="line">        <span class="keyword">let</span> row2 = <span class="type">ProfileData</span>(title: <span class="string">"ID"</span>, content: <span class="string">"kenshincui"</span>)</span><br><span class="line">        <span class="keyword">let</span> section1 = [row1,row2]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row3 = <span class="type">ProfileData</span>(title: <span class="string">"Gender"</span>, content: <span class="string">"Male"</span>)</span><br><span class="line">        <span class="keyword">let</span> row4 = <span class="type">ProfileData</span>(title: <span class="string">"Region"</span>, content: <span class="string">"China"</span>)</span><br><span class="line">        <span class="keyword">let</span> section2 = [row3,row4]</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> row5 = <span class="type">ProfileData</span>(title: <span class="string">"What's Up"</span>, content: <span class="string">"We're here to put a dent in the universe。 Otherwise why else even be here？"</span>)</span><br><span class="line">        <span class="keyword">let</span> section3 = [row5]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.data.append(section1)</span><br><span class="line">        <span class="keyword">self</span>.data.append(section2)</span><br><span class="line">        <span class="keyword">self</span>.data.append(section3)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">loadHeaderData</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="type">DispatchQueue</span>.main.asyncAfter(</span><br><span class="line">        deadline: <span class="type">DispatchTime</span>.now() + <span class="type">Double</span>(<span class="type">Int64</span>(<span class="number">2.0</span> * <span class="type">Double</span>(<span class="type">NSEC_PER_SEC</span>))) / <span class="type">Double</span>(<span class="type">NSEC_PER_SEC</span>)) &#123;</span><br><span class="line">            () -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">            <span class="comment">// set header data</span></span><br><span class="line">            <span class="keyword">self</span>.headerView.avatarURL = <span class="string">"avatar.jpg"</span></span><br><span class="line">            <span class="keyword">self</span>.headerView.introduction = <span class="string">"即使是别人看不见的地方，对其工艺也应该尽心尽力！"</span></span><br><span class="line">            <span class="keyword">self</span>.headerView.frame.size.height = <span class="keyword">self</span>.headerView.systemLayoutSizeFitting(<span class="type">UILayoutFittingCompressedSize</span>).height</span><br><span class="line">            <span class="keyword">self</span>.tableView.tableHeaderView = <span class="keyword">self</span>.headerView</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Private property</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> tableView:<span class="type">UITableView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UITableView</span>(frame: <span class="type">CGRect</span>.zero, style: .grouped)</span><br><span class="line">        temp.estimatedRowHeight = <span class="number">50</span></span><br><span class="line">        temp.sectionFooterHeight = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> headerView:<span class="type">ProfileHeaderView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">ProfileHeaderView</span>()</span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    fileprivate <span class="keyword">var</span> data = [[<span class="type">ProfileData</span>]]()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ProfileTableViewControllerWithHeader</span>:<span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span></span>&#123;</span><br><span class="line">    <span class="comment">// MARK: - Table view data source</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">numberOfSections</span><span class="params">(<span class="keyword">in</span> tableView: UITableView)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.data.<span class="built_in">count</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> sectionData = <span class="keyword">self</span>.data[section]</span><br><span class="line">        <span class="keyword">return</span> sectionData.<span class="built_in">count</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, cellForRowAt indexPath: IndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> cell = tableView.dequeueReusableCell(withIdentifier: <span class="type">ProfileTableViewControllerCellReuseIdentifier</span>, <span class="keyword">for</span>: indexPath) <span class="keyword">as</span>? <span class="type">ProfileTableViewCell</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> dataItem = <span class="keyword">self</span>.data[indexPath.section][indexPath.row]</span><br><span class="line">            cell.title = dataItem.title</span><br><span class="line">            cell.content = dataItem.content</span><br><span class="line">            <span class="keyword">return</span> cell</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">UITableViewCell</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - Table view delegate</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, heightForHeaderInSection section: Int)</span></span> -&gt; <span class="type">CGFloat</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> section == <span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">CGFloat</span>.leastNormalMagnitude</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">8.0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </section>
+
+  
+
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'kenshincui'; 
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
