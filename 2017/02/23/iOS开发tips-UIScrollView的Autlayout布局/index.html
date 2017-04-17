@@ -1,232 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui&#39;s Blog</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="iOS Developer">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui&#39;s Blog">
+    <meta name="twitter:description" content="iOS Developer">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui&#39;s Blog">
+    <meta property="og:description" content="iOS Developer">
 
     
-
-    <title>
-      iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui&#39;s Blog 
-    </title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="author" content="Kenshin Cui">
     
-      <meta name="author" content="Kenshin Cui">
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
     
+    <link rel="icon" href="/favicon.ico">
     
 
-    <meta name="description" content="UIScrollViewj尽管继承于UIView，但它是一个相对比较特殊的视图，特别是当它遇到了AutoLayout之后。在UIScrollView中使用AutoLayout的目的除了使用相对约束确定子控件的位置和大小外，更重要的是如何自动计算出UIScrollView的contentSize（关于使用UIScrollView并且最终手动指定contentSize的AutoLayout用法不再今天">
-<meta property="og:type" content="article">
-<meta property="og:title" content="iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui's Blog">
-<meta property="og:url" content="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/index.html">
-<meta property="og:site_name" content="Kenshin Cui's Blog">
-<meta property="og:description" content="UIScrollViewj尽管继承于UIView，但它是一个相对比较特殊的视图，特别是当它遇到了AutoLayout之后。在UIScrollView中使用AutoLayout的目的除了使用相对约束确定子控件的位置和大小外，更重要的是如何自动计算出UIScrollView的contentSize（关于使用UIScrollView并且最终手动指定contentSize的AutoLayout用法不再今天">
-<meta property="og:image" content="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/UIScrollViewLayout.png">
-<meta property="og:image" content="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/ShareExtension.gif">
-<meta property="og:updated_time" content="2017-02-27T15:27:42.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui's Blog">
-<meta name="twitter:description" content="UIScrollViewj尽管继承于UIView，但它是一个相对比较特殊的视图，特别是当它遇到了AutoLayout之后。在UIScrollView中使用AutoLayout的目的除了使用相对约束确定子控件的位置和大小外，更重要的是如何自动计算出UIScrollView的contentSize（关于使用UIScrollView并且最终手动指定contentSize的AutoLayout用法不再今天">
-<meta name="twitter:image" content="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/UIScrollViewLayout.png">
+    <meta name="generator" content="hexo"/>
     
-    
-    
-      <link rel="icon" type="image/x-icon" href="/favicon.png">
-    
-    <link rel="stylesheet" href="/css/uno.css">
-    <link rel="stylesheet" href="/css/highlight.css">
-    <link rel="stylesheet" href="/css/archive.css">
-    <link rel="stylesheet" href="/css/china-social-icon.css">
 
+    <link rel="canonical" href="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/"/>
+
+                 
 </head>
-<body>
 
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
     <span class="mobile btn-mobile-menu">
-        <i class="icon icon-list btn-mobile-menu__icon"></i>
-        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
     </span>
 
     
-
-<header class="panel-cover panel-cover--collapsed">
-
-
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
   <div class="panel-main">
-
-  
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
+        <a href="/" title="前往 Kenshin Cui&#39;s Blog 的主页"><img src="/images/avatar.jpg" width="80" alt="Kenshin Cui&#39;s Blog logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Kenshin Cui&#39;s Blog">Kenshin Cui&#39;s Blog</a></h1>
         
-
-        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Kenshin Cui&#39;s Blog</a></h1>
+        <span class="panel-cover__subtitle panel-subtitle">即便是别人看不到的地方, 对其工艺也必须尽心尽力。</span>
+        
         <hr class="panel-cover__divider" />
-
-        
-        <p class="panel-cover__description">
-          即便是别人看不到的地方, 对其工艺也必须尽心尽力。
-        </p>
+        <p class="panel-cover__description">iOS Developer</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
-        
 
         <div class="navigation-wrapper">
-
+          <div>
           <nav class="cover-navigation cover-navigation--primary">
             <ul class="navigation">
-
-              
-                
-                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
-              
-                
-                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
-              
-                
-                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
-              
-
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+              <li class="navigation__item"><a href="/archive">归档</a></li>
+            
+              <li class="navigation__item"><a href="/about">关于</a></li>
+            
             </ul>
           </nav>
-
-          <!-- ----------------------------
-To add a new social icon simply duplicate one of the list items from below
-and change the class in the <i> tag to match the desired social network
-and then add your link to the <a>. Here is a full list of social network
-classes that you can use:
-
-    icon-social-500px
-    icon-social-behance
-    icon-social-delicious
-    icon-social-designer-news
-    icon-social-deviant-art
-    icon-social-digg
-    icon-social-dribbble
-    icon-social-facebook
-    icon-social-flickr
-    icon-social-forrst
-    icon-social-foursquare
-    icon-social-github
-    icon-social-google-plus
-    icon-social-hi5
-    icon-social-instagram
-    icon-social-lastfm
-    icon-social-linkedin
-    icon-social-medium
-    icon-social-myspace
-    icon-social-path
-    icon-social-pinterest
-    icon-social-rdio
-    icon-social-reddit
-    icon-social-skype
-    icon-social-spotify
-    icon-social-stack-overflow
-    icon-social-steam
-    icon-social-stumbleupon
-    icon-social-treehouse
-    icon-social-tumblr
-    icon-social-twitter
-    icon-social-vimeo
-    icon-social-xbox
-    icon-social-yelp
-    icon-social-youtube
-    icon-social-zerply
-    icon-mail
-
--------------------------------->
-
-<!-- add social info here -->
-
-
-
-<nav class="cover-navigation navigation--social">
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
   <ul class="navigation">
 
-    
-      <!-- Github -->
-      <li class="navigation__item">
-        <a href="https://github.com/kenshincui" title="Huno on GitHub">
-          <i class='icon icon-social-github'></i>
-          <span class="label">GitHub</span>
-        </a>
-      </li>
-    
+  <!-- Weibo-->
+  
 
-    <!-- China social icon -->
-    <!--
-    
-      <li class="navigation__item">
-        <a href="" title="">
-          <i class='icon cs-icon-douban'></i>
-          <span class="label">Douban</span>
-        </a>
-      </li>
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/kenshincui" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
 
-      <li class="navigation__item">
-        <a href="" title="">
-          <i class='icon cs-icon-weibo'></i>
-          <span class="label">Weibo</span>
-        </a>
-      </li>
 
-    -->
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
 
 
 
   </ul>
 </nav>
 
-
-
+          </div>
         </div>
 
       </div>
 
     </div>
 
-    <div class="panel-cover--overlay"></div>
-  </div>
+    <div class="panel-cover--overlay cover-green"></div>
+  </div> 
 </header>
 
     <div class="content-wrapper">
-        <div class="content-wrapper__inner entry">
-            
-
-<article class="post-container post-container--single">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
 
   <header class="post-header">
-    
-    <h1 class="post-title">iOS开发tips-UIScrollView的Autlayout布局</h1>
-
-    
-
     <div class="post-meta">
-      <time datetime="2017-02-23" class="post-meta__date date">2017-02-23</time> 
-
-      <span class="post-meta__tags tags">
-
-          
-            <font class="categories">
-            &#8226; 分类:
-            <a class="categories-link" href="/categories/iOS每日Tips/">iOS每日Tips</a>
-            </font>
-          
-
-          
-             &#8226; 标签:
-            <font class="tags">
-              <a class="tags-link" href="/tags/AutoLayout/">AutoLayout</a>
-            </font>
-          
-
-      </span>
+      <time datetime="2017-02-23T06:53:12.000Z" class="post-list__meta--date date">2017-02-23</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/AutoLayout/">AutoLayout</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
     </div>
-    
-    
-
+    <h1 class="post-title">iOS开发tips-UIScrollView的Autlayout布局</h1>
   </header>
 
-  <section id="post-content" class="article-content post">
+  <section class="post">
     <p>UIScrollViewj尽管继承于UIView，但它是一个相对比较特殊的视图，特别是当它遇到了AutoLayout之后。在UIScrollView中使用AutoLayout的目的除了使用相对约束确定子控件的位置和大小外，更重要的是如何自动计算出UIScrollView的contentSize（关于使用UIScrollView并且最终手动指定contentSize的AutoLayout用法不再今天讨论之列，严格意义上来说这也不是一种真正的UIScrollView的AutoLayout应用）。</p>
 <h2 id="UIScrollView的特殊之处"><a href="#UIScrollView的特殊之处" class="headerlink" title="UIScrollView的特殊之处"></a>UIScrollView的特殊之处</h2><p>所谓UIScrollView的特殊之处就在于当它遇到了AutoLayout之后其contentSize的计算规则有些特殊。首先contentSize是根据子视图的leading/trailing/top/bottom进行确定的，而子视图的位置约束又必须依赖于UIScrollView来确定。这就有点类似于前面<a href="http://www.cnblogs.com/kenshincui/p/6391312.html" target="_blank" rel="external">UICollectionView自适应高度</a>文章中提到的：UICollectionViewCell的大小计算就是计算contentView的大小，而contentView的大小计算依赖于子视图的leading/trailing/top/bottom，子视图的位置约束又依赖于contentView，此时只要子视图存在固有尺寸（intrinsicContentSize）或者指定了尺寸又设置了leading/trailing/top/bottom，AutoLayout布局引擎即可计算出contentView的大小。<br>再回到AutoLayout，其实它的contentSize计算原理和UICollectionViewCell自适应很是类似，只是UIScrollView内部并没有一个contentView的东西（但是可以想象其存在，方便后面的理解，不过要清楚UIScrollView滚动的本质并非包含一个contentView而是通过bounds和frame坐标体系转换来实现的），只要设置子视图的leading/trailing/top/bottom（通常是通过edges=0让子视图上下左右间距都为0保证整个视图都在UIScrollView可视范围之内），然后通过设置size（width/height）约束确定子视图大小进而由AutoLayout反向计算出UIScrollView的contentSize。<br>假设A是UIScrollView（蓝色）、B是子视图1（绿色）、C是子视图2（绿色）、D是contentSize的计算区域（灰色，事实上它不存在），要想让cotentSize可以自动计算只需要确定B、C上下左右布局间距，然后再指定B、C间距和尺寸之后AutLayout既可以自动推断出contentSize的大小，原理如下图(下图布局类似于下面Demo3)：</p>
 <img src="/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/UIScrollViewLayout.png" alt="UIScrollViewLayout.png" title="">
@@ -241,72 +154,82 @@ classes that you can use:
 
   </section>
 
-  
+</article>
 
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/25/iOS开发tips-UITableView、UICollectionView行高-尺寸自适应/" title="iOS开发tips-UITableView、UICollectionView行高/尺寸自适应">iOS开发tips-UITableView、UICollectionView行高/尺寸自适应</a></h2>
+                <p class="excerpt">
+                
+                UITableView我们都知道UITableView从iOS 8开始实现行高的自适应相对比较简单，首先必须设置estimatedRowHeight给出预估高度，设置rowHeight为UITableViewAutomaticDimension（注意：如果不修改rowHeight默认就是UITabl
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-25T02:56:23.000Z" class="post-list__meta--date date">2017-02-25</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/AutoLayout/">AutoLayout</a>
+</span><a class="btn-border-small" href="/2017/02/25/iOS开发tips-UITableView、UICollectionView行高-尺寸自适应/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+        
+     
+   
+   
+  
+</section>
+
+  
 <section class="post-comments">
   <div id="disqus_thread"></div>
   <script type="text/javascript">
       var disqus_shortname = 'kenshincui'; 
+      
+  var disqus_identifier = '/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/';
+  var disqus_title = 'iOS开发tips-UIScrollView的Autlayout布局';
+  var disqus_url = 'http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/';
+  
+
       /* * * DON'T EDIT BELOW THIS LINE * * */
       (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          //dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          dsq.src = 'https://a.disquscdn.com/embed.js';
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </section>
 
 
-  
-</article>
-
-
             <footer class="footer">
-
-    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2017 - 本站使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题,
+        由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
     
 </footer>
+
+
         </div>
     </div>
 
-    <!-- js files -->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/scale.fix.js"></script>
+     
     
 
-    
 
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript"> 
-        $(document).ready(function(){
-            MathJax.Hub.Config({ 
-                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
-            });
-        });
-    </script>
-
-
-    
-
-    <script src="/js/awesome-toc.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $.awesome_toc({
-                overlay: true,
-                contentId: "post-content",
-            });
-        });
-    </script>
-
-
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     
     
-    <!--kill ie6 -->
-<!--[if IE 6]>
-  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
-<![endif]-->
-
 </body>
 </html>
