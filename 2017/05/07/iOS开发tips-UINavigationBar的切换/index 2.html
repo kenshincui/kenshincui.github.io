@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS开发tips-UINavigationBar的切换 | Kenshin Cui&#39;s Blog</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="iOS Developer">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS开发tips-UINavigationBar的切换 | Kenshin Cui&#39;s Blog">
+    <meta name="twitter:description" content="iOS Developer">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS开发tips-UINavigationBar的切换 | Kenshin Cui&#39;s Blog">
+    <meta property="og:description" content="iOS Developer">
+
+    
+    <meta name="author" content="Kenshin Cui">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2017/05/07/iOS开发tips-UINavigationBar的切换/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Kenshin Cui&#39;s Blog 的主页"><img src="/images/avatar.jpg" width="80" alt="Kenshin Cui&#39;s Blog logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Kenshin Cui&#39;s Blog">Kenshin Cui&#39;s Blog</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">即便是别人看不到的地方, 对其工艺也必须尽心尽力。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">iOS Developer</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+              <li class="navigation__item"><a href="/archive">归档</a></li>
+            
+              <li class="navigation__item"><a href="/about">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/kenshincui" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-green"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-05-07T02:56:23.000Z" class="post-list__meta--date date">2017-05-07</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/UINavigationBar/">UINavigationBar</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">iOS开发tips-UINavigationBar的切换</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在iOS系统中，如果控制器是以push方式进行管理的话，那么事实上多个控制器是共享的同一个导航栏。当然iOS系统的设计无可厚非，但是国内的应用经常会遇到很多个性的设计，就比如说A push到 B，A可能有导航栏，但是B控制器要求导航栏是透明的，这样一来A和B由于共用同一个导航栏就会让整个切换操作不易管理，何况从iOS 7开始不仅仅是点击返回按钮瞬间返回A那么简单，还要支持通过手势操作从B缓慢返回到A的导航栏渐变效果。本文就简单看一下如何能够更加合理的设计导航栏切换的效果以避免开发中由于导航栏管理不善而造成管理混乱的状况。</p>
+<h2 id="导航栏"><a href="#导航栏" class="headerlink" title="导航栏"></a>导航栏</h2><p>在开始今天的话题之前，先看一下关于UINavigationBar的一些常见设计，要想清楚的了解导航栏的切换，弄清UINavigationBar的一些常用设置是必不可少的。简单起见，这里仅仅列出具体设置方式，不再一一赘述其细节：</p>
+<ul>
+<li>barbuttonitem颜色设置:navigationBar.tintColor</li>
+</ul>
+<p>这种方式包括push中的返回按钮，不过返回按钮可以通过自定义图片达到调整颜色效果<strong>navigationBar.backIndicatorImage</strong>及<strong>navigationBar.backIndicatorTransitionMaskImage</strong>。<br>此外，注意字体大小等则必须通过UIBarButtonItem的<strong>setTitleTextAttributes</strong>设置，或者干脆自定义customView</p>
+<ul>
+<li>NavigationBar title颜色设置：navigationBar.titleTextAttributes</li>
+</ul>
+<p>注意：如果个性的标题栏，例如背景图则可以直接设置<strong>navigationItem.titleView</strong>)</p>
+<ul>
+<li><p>返回按钮移除标题：backBarButtonItem.setBackButtonTitlePositionAdjustment将标题移除屏幕外</p>
+</li>
+<li><p>导航栏颜色设置：navigationBar.barTintColor</p>
+</li>
+</ul>
+<p>注意：也可以使用navigationBar.setBackgroundImage方法指定一个不同颜色的图片修改导航栏背景色。</p>
+<p>另外，<strong>navigationBar.barStyle</strong>是对于导航栏整体风格的设置，默认为<strong>default</strong>（白色背景、黑色文字、状态栏文字也是黑色），你可以设置成<strong>black</strong>（黑色背景、白色文字，状态栏文字也是白色）。也就是说它不仅影响到导航栏背景色和标题颜色等，也影响状态栏风格。不过当这个设置和上面的设置发生冲突时，会以上面的独立设置为准。</p>
+<p><strong>isTranslucent</strong>是另一个导航栏常用属性，从iOS 7开始加入，默认为<strong>true</strong>代表导航栏半透明。如果通过navigationBar.setBackgroundImage来修改导航栏背景色，导航isTranslucent=true时即使图片颜色不透明那么系统也会修改图片的alpha达到半透明效果（这种情况_UIBarBackground透明，修改图片alpha。但是这种半透明效果并非系统默认的毛玻璃效果，系统默认的的毛玻璃效果是iOS增加了UIVisualEffectView来实现的，而自定义背景之后则不会自动增加UIVisualEffectView）；如果isTranslucent=false那么即使图片颜色透明，系统也会将其调整为不透明效果（这种情况是将_UIBarBackground设置为白色或黑色，具体依据barStyle确定）。但是如果是通过barTintColor修改背景色的话，即使isTranslucent=true也无法达到半透明效果。</p>
+<p>有了上面的结论之后，要实现导航栏透明效果只需要通过navigationBar.setBackgroundImage设置一个透明图片，然后设置isTranslucent=true即可。</p>
+<h2 id="导航栏切换效果"><a href="#导航栏切换效果" class="headerlink" title="导航栏切换效果"></a>导航栏切换效果</h2><p>导航栏的切换效果其实主要是不同颜色的导航栏切换或者从透明到不透明切换。不管是哪种切换，最直观的方式肯定是在viewWillAppear中设置当前控制器的导航栏样式（当然，如果一个应用中仅仅个别界面需要特殊设置，也可以在这个控制器中设置特殊样式，然后再viewWillDisappear中恢复设置，但通常不推荐这么做，因为如果后期特殊样式增多会有很多坑），下面第一个demo中先看一下这么做的效果。</p>
+<h3 id="原始方式"><a href="#原始方式" class="headerlink" title="原始方式"></a>原始方式</h3><p>viewWillAppear()中独立设置当前控制器的样式固然是最容易想到也是最好实现的方式，这种方式不仅支持默然的push、pop，同样支持手势返回操作，但是缺点也很明显，那就是手势操作时切换效果很突兀。demo1演示了这个效果：</p>
+<p><img src="media/NaivgationBarTransation_Demo1.gif" alt="NaivgationBarTransation_Demo1"></p>
+<h3 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h3><p>Demo1的效果是最原始的方式，易实现，但效果不好。事实上苹果也注意到了这个问题，所以提供了一个<strong>setNavigationBarHidden(&lt;#T##hidden: Bool##Bool#&gt;, animated: &lt;#T##Bool#&gt;)</strong>方法用于隐藏和重新展示导航条，这样一来对于透明导航条只有在<strong>viewWillAppear</strong>中隐藏导航条，在<strong>viewWillDisappear</strong>中重新展示即可。而对于切换不同颜色的导航条则只需要隐藏用这个方法隐藏导航条然后自定义一个UINavigationBar增加到导航条的位置（添加一个假的导航条）。不过这种方式的由于隐藏了导航条，那么侧滑返回手势也会消失，解决方式是重新设置当前控制器的<strong>interactivePopGestureRecognizer.delegate=self</strong>，demo2演示了这个效果：</p>
+<p><img src="media/NaivgationBarTransation_Demo2.gif" alt="NaivgationBarTransation_Demo2"></p>
+<blockquote>
+<p>注意：<br>1.上面的setNavigationBarHidden(hidden: Bool, animated: Bool)不能更换成navigationBar.isHidden)，否则达不到效果。</p>
+<p>2.通过interactivePopGestureRecognizer.delegate=self来达到侧滑返回效果时，多次push、pop会出现界面错乱操作失效的问题，解决方式就是在适当的时候禁用侧滑,详见代码中<em>BaseNavigationController</em>。<br>3.也有人将setNavigationBarHidden(hidden: Bool, animated: Bool)的调用放到UINavigationController的navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool)方法中，也不失一种办法（不过这种方法不利于维护）</p>
+</blockquote>
+<h3 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h3><p>方案1最大的问题就是还必须自己添加UINavigationBar，而且由于隐藏了系统的导航栏，造成侧滑手势丢失。如果仅仅只是隐藏了导航栏的背景，而所有的navigationItem还是使用系统原有的，这样一来就可以规避方案1的缺点，不仅如此，在手势切换过程中navigationItem默认是有动画切换效果的。demo3演示了这一用法：</p>
+<p><img src="media/NaivgationBarTransation_Demo3.gif" alt="NaivgationBarTransation_Demo3"></p>
+<blockquote>
+<p>当然，demo中为了不影响其他演示，使用了自定义导航控制器TransparentNavigationController并且在其中设置隐藏导航栏背景，实际开发中如果有必要你可以通过appearance统一隐藏所有的导航栏背景。<br>方案2效果相对来说已经比较完美了，不足的地方是如果要实现毛玻璃效果就需要自己处理。微信在这点上做了更细节的处理：在转场过程中使用自定义导航栏背景，转场切换完成以后替换成系统的导航栏效果，实现了对方案2的细节改进。如果你想实现半透明效果而又不想自己实现，可以考虑这种方式，否则方案2应该可以说是比较完美的方案。</p>
+</blockquote>
+<h2 id="切换动画"><a href="#切换动画" class="headerlink" title="切换动画"></a>切换动画</h2><p>其实多数App都采用的前面提到的解决方案，但是类似于手QQ进入QQ空间的切换就没有这么处理（考虑可能是出于QQ空间界面的导航栏上拉还需要导航栏渐显而有意这么处理的），手QQ要实现的效果是从<em>动态</em>到<em>空间</em>导航栏从蓝色逐渐消失，而从<em>空间</em>回来则相反。实现这个过程其实最主要的是考虑手势返回时透明度的设置和返回进度保持一致，好在苹果已经提供了现成的api供我们调用，这就是<strong>self.transitionCoordinator.animateAlongsideTransition(in view: UIView?, animation: ((UIViewControllerTransitionCoordinatorContext) -&gt; Swift.Void)?, completion: ((UIViewControllerTransitionCoordinatorContext) -&gt; Swift.Void)? = nil)</strong>，默认转场时会通过这个动画回调计算出block的中间插值，无论手势停留在哪一时刻都能确保动画插值保持一致，从而达到类似于QQ空间的手势切换效果。demo4演示了这一实现：</p>
+<p><img src="media/NaivgationBarTransation_Demo4.gif" alt="NaivgationBarTransation_Demo4"></p>
+<blockquote>
+<p>当然，如果你愿意，可以通过demo4配合demo3实现更好的切换效果。<br>此外，也有人通过swizzle UINavigationController的_updateInteractiveTransition:方法在手势切换过程中动态修改导航栏的透明度等来达到完美的过渡，但相比较于上面的公开方法并没有太明显的优势。而且这只适用于从无到有的过渡，对于不同颜色的导航栏过渡也显得无能为力。类似的还有使用iOS7新加入的UIViewControllerInteractiveTransitioning自定义转场动画，这跟swizzle _updateInteractiveTransition:并没有明显的区别。</p>
+</blockquote>
+<h2 id="扩展：全屏返回手势"><a href="#扩展：全屏返回手势" class="headerlink" title="扩展：全屏返回手势"></a>扩展：全屏返回手势</h2><p>和导航栏相关的另一个问题就是侧滑手势返回。前面可以看到方案2相对方案1其中一个优点就是不用想办法维护返回手势失效的问题，但是不管哪种方案都不能全屏手势返回。尽管这个需求如果苹果从系统级设计实现将是易如反掌，但显然苹果觉得从边缘侧滑才是合理的，不过全屏侧滑基本已经是目前国内app的标配了。</p>
+<p>实现全屏侧滑返回首先想到的是使用iOS7新增的UIViewControllerInteractiveTransitioning，这是苹果推荐的方式，既然转场可以自定义，当然添加个手势返回也不会很复杂。但是这种方式的最大问题就是实现起来并没有系统滑动那般丝滑，想要实现类似系统的切换效果还要好好下一番功夫。于是就有朋友想到自定义一个拖动手势添加到全屏，而真正侧滑的操作使用系统的方法，这也是目前很多app普遍使用的方式。在下面的demo5中演示了这一方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FullScreenPoNavigationViewController</span>: <span class="title">UINavigationController</span>,<span class="title">UIGestureRecognizerDelegate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> popGesture = <span class="keyword">self</span>.interactivePopGestureRecognizer</span><br><span class="line">        <span class="keyword">let</span> popTarget = popGesture?.delegate</span><br><span class="line">        <span class="keyword">let</span> popView = popGesture!.view!</span><br><span class="line">        popGesture?.isEnabled = <span class="literal">false</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> popSelector = <span class="type">NSSelectorFromString</span>(<span class="string">"handleNavigationTransition:"</span>)</span><br><span class="line">        <span class="keyword">let</span> fullScreenPoGesture = <span class="type">UIPanGestureRecognizer</span>(target: popTarget, action: popSelector)</span><br><span class="line">        fullScreenPoGesture.delegate = <span class="keyword">self</span></span><br><span class="line">        </span><br><span class="line">        popView.addGestureRecognizer(fullScreenPoGesture)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">gestureRecognizerShouldBegin</span><span class="params">(<span class="number">_</span> gestureRecognizer: UIGestureRecognizer)</span></span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.childViewControllers.<span class="built_in">count</span> &gt; <span class="number">1</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="media/NaivgationBarTransation_Demo5.gif" alt="NaivgationBarTransation_Demo5"></p>
+<p>当然上面的实现并不太完美，多次滑动之后有时候还会出现bug，这需要一些条件控制，不过你可以利用Swizzle黑魔法将其应用到系统中所有的导航控制器中，这一点可以参考sunnyxx的开源库<a href="https://github.com/forkingdog/FDFullscreenPopGesture" target="_blank" rel="external">FDFullscreenPopGesture</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>方案1自定义完整的导航栏和方案2仅仅自定义导航栏背景基本是当前国内绝大多数app的做法。但是类似于网易云音乐和微信等应用也对方案1和方案2做了改进，微信的改进上面已经提到了，网易云音乐使用的方式类似于方案1，但是它并没有自定义导航栏而是巧妙的在导航栏外嵌套一个UINavigationController来实现（由于UINavigationController无法直接push另一个UINavigationController，所以外面还要再多嵌套一个UIViewController），这种方式规避了自定义导航栏的麻烦，但是也不是没有缺点，例如如果你不是很清楚其中的结构，想要拿到当前控制器的导航控制器时可能会事与愿违。 除了上述方式还有一些其他方式实现导航栏的切换效果，例如通过截图方式，但相对比较麻烦而且和原有实现方式也有所偏离，在此不再赘述，有兴趣可以继续探索。</p>
+<p><a href="https://pan.baidu.com/s/1slFFFe1" target="_blank" rel="external">代码下载</a></p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/05/08/iOS刨根问底-深入理解RunLoop/" title="iOS刨根问底-深入理解RunLoop">iOS刨根问底-深入理解RunLoop</a></h2>
+                <p class="excerpt">
+                
+                概述RunLoop作为iOS中一个基础组件和线程有着千丝万缕的关系，同时也是很多常见技术的幕后功臣。尽管在平时多数开发者很少直接使用RunLoop，但是理解RunLoop可以帮助开发者更好的利用多线程编程模型，同时也可以帮助开发者解答日常开发中的一些疑惑。本文将从RunLoop源码着手，结合RunL
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-05-08T03:05:23.000Z" class="post-list__meta--date date">2017-05-08</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/RunLoop/">RunLoop</a>
+</span><a class="btn-border-small" href="/2017/05/08/iOS刨根问底-深入理解RunLoop/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/15/iOS开发tips-神奇的UITableView/" title="iOS开发tips-神奇的UITableView">iOS开发tips-神奇的UITableView</a></h2>
+                <p class="excerpt">
+                
+                UITableView是iOS开发中使用频率最高的UI控件，在前面的文章中对于UITableView的具体用法有详细的描述，今天主要看一些UITableView开发中的常见一些坑，这些坑或许不深，但是如果开发中注意不到的话往往比较浪费时间。
+神奇的section header事情的起因是一个网友说要
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-04-15T02:56:23.000Z" class="post-list__meta--date date">2017-04-15</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/UITableView/">UITableView</a>
+</span><a class="btn-border-small" href="/2017/04/15/iOS开发tips-神奇的UITableView/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'kenshincui'; 
+      
+  var disqus_identifier = '/2017/05/07/iOS开发tips-UINavigationBar的切换/';
+  var disqus_title = 'iOS开发tips-UINavigationBar的切换';
+  var disqus_url = 'http://yoursite.com/2017/05/07/iOS开发tips-UINavigationBar的切换/';
+  
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          //dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          dsq.src = 'https://a.disquscdn.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2017 - 本站使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题,
+        由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>
