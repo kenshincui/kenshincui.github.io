@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui&#39;s Blog</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="iOS Developer">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui&#39;s Blog">
+    <meta name="twitter:description" content="iOS Developer">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS开发tips-UIScrollView的Autlayout布局 | Kenshin Cui&#39;s Blog">
+    <meta property="og:description" content="iOS Developer">
+
+    
+    <meta name="author" content="Kenshin Cui">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Kenshin Cui&#39;s Blog 的主页"><img src="/images/avatar.jpg" width="80" alt="Kenshin Cui&#39;s Blog logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Kenshin Cui&#39;s Blog">Kenshin Cui&#39;s Blog</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">即便是别人看不到的地方, 对其工艺也必须尽心尽力。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">iOS Developer</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+              <li class="navigation__item"><a href="/archive">归档</a></li>
+            
+              <li class="navigation__item"><a href="/about">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/kenshincui" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-green"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-23T06:53:12.000Z" class="post-list__meta--date date">2017-02-23</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/AutoLayout/">AutoLayout</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">iOS开发tips-UIScrollView的Autlayout布局</h1>
+  </header>
+
+  <section class="post">
+    <p>UIScrollViewj尽管继承于UIView，但它是一个相对比较特殊的视图，特别是当它遇到了AutoLayout之后。在UIScrollView中使用AutoLayout的目的除了使用相对约束确定子控件的位置和大小外，更重要的是如何自动计算出UIScrollView的contentSize（关于使用UIScrollView并且最终手动指定contentSize的AutoLayout用法不再今天讨论之列，严格意义上来说这也不是一种真正的UIScrollView的AutoLayout应用）。</p>
+<h2 id="UIScrollView的特殊之处"><a href="#UIScrollView的特殊之处" class="headerlink" title="UIScrollView的特殊之处"></a>UIScrollView的特殊之处</h2><p>所谓UIScrollView的特殊之处就在于当它遇到了AutoLayout之后其contentSize的计算规则有些特殊。首先contentSize是根据子视图的leading/trailing/top/bottom进行确定的，而子视图的位置约束又必须依赖于UIScrollView来确定。这就有点类似于前面<a href="http://www.cnblogs.com/kenshincui/p/6391312.html" target="_blank" rel="external">UICollectionView自适应高度</a>文章中提到的：UICollectionViewCell的大小计算就是计算contentView的大小，而contentView的大小计算依赖于子视图的leading/trailing/top/bottom，子视图的位置约束又依赖于contentView，此时只要子视图存在固有尺寸（intrinsicContentSize）或者指定了尺寸又设置了leading/trailing/top/bottom，AutoLayout布局引擎即可计算出contentView的大小。<br>再回到AutoLayout，其实它的contentSize计算原理和UICollectionViewCell自适应很是类似，只是UIScrollView内部并没有一个contentView的东西（但是可以想象其存在，方便后面的理解，不过要清楚UIScrollView滚动的本质并非包含一个contentView而是通过bounds和frame坐标体系转换来实现的），只要设置子视图的leading/trailing/top/bottom（通常是通过edges=0让子视图上下左右间距都为0保证整个视图都在UIScrollView可视范围之内），然后通过设置size（width/height）约束确定子视图大小进而由AutoLayout反向计算出UIScrollView的contentSize。<br>假设A是UIScrollView（蓝色）、B是子视图1（绿色）、C是子视图2（绿色）、D是contentSize的计算区域（灰色，事实上它不存在），要想让cotentSize可以自动计算只需要确定B、C上下左右布局间距，然后再指定B、C间距和尺寸之后AutLayout既可以自动推断出contentSize的大小，原理如下图(下图布局类似于下面Demo3)：</p>
+<img src="/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/UIScrollViewLayout.png" alt="UIScrollViewLayout.png" title="">
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><h3 id="demo1-单个子视图布局"><a href="#demo1-单个子视图布局" class="headerlink" title="demo1  单个子视图布局"></a>demo1  单个子视图布局</h3><p>对于单个子视图布局比较简单，只要设置leading/trailing/top/bottom，再设置子视图的size（width/height）即可，当然如果子视图存在固有尺寸并且想要使用固有尺寸的话，则这一步也可以省略。例如下面demo中演示了一个UIScrollView包含一个UIImageView子视图的图片查看界面。在下面的布局中仅仅设置了UIImageView上下左右边距，而UIImageView存在固有尺寸，因此整个布局就相当简单了（AutoLayout布局使用<a href="https://github.com/SnapKit/SnapKit" target="_blank" rel="external">SnapKit</a>库）。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImageViewController</span>: <span class="title">UIViewController</span> </span>&#123;	</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.view.addSubview(<span class="keyword">self</span>.scrollView)</span><br><span class="line">        <span class="keyword">self</span>.scrollView.addSubview(<span class="keyword">self</span>.imageView)</span><br><span class="line">        <span class="keyword">self</span>.scrollView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.edges.equalTo(<span class="number">0.0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.imageView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            <span class="comment">// 下面的约束用于确定contentSize的边距约束(leading/trailing/top/bottom)</span></span><br><span class="line">            <span class="comment">// 而由于UIImageView和UILabel、UIButton一样存在固有尺寸（intrinsicContentSize），因此不需要其他size约束就可以计算出contentSize大小</span></span><br><span class="line">            make.edges.equalTo(<span class="number">0.0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - 私有属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> scrollView:<span class="type">UIScrollView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIScrollView</span>()</span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> imageView:<span class="type">UIImageView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: <span class="string">"img"</span>)</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIImageView</span>(image:image)</span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="demo2-多个子视图布局使用containerView"><a href="#demo2-多个子视图布局使用containerView" class="headerlink" title="demo2 多个子视图布局使用containerView"></a>demo2 多个子视图布局使用containerView</h3><p>很多UIScrollView的AutoLayout的布局文章中都会提到使用一个容器视图包含多个子视图，然后分别完成子视图布局和容器视图在UIScrollView中的布局，以此来简化布局过程。下面的Demo中演示了一个图片分页查看的布局情况，containerView作为容器布局时设置上下左右间距，然后设置其高度等于UIScrollView高度（因为要实现左右滚动），而此时并不需要设置宽度，因为宽度的计算依赖于子视图。在containerView的子视图中只要设置子视图与containerView的边距及各自间距和宽度，之后AutoLayout就可以计算出containerView的宽度。如此一来containerView已经设置完了四周间距和尺寸就可以计算出contentSize。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SlideViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.automaticallyAdjustsScrollViewInsets = <span class="literal">false</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.view.addSubview(<span class="keyword">self</span>.scrollView)</span><br><span class="line">        <span class="keyword">self</span>.scrollView.addSubview(<span class="keyword">self</span>.containerView)</span><br><span class="line">        <span class="keyword">self</span>.containerView.addSubview(<span class="keyword">self</span>.firstImageView)</span><br><span class="line">        <span class="keyword">self</span>.containerView.addSubview(<span class="keyword">self</span>.secondImageView)</span><br><span class="line">        <span class="keyword">self</span>.containerView.addSubview(<span class="keyword">self</span>.thirthImageView)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.scrollView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.equalTo(<span class="keyword">self</span>.topLayoutGuide.snp.bottom)</span><br><span class="line">            make.<span class="keyword">left</span>.bottom.<span class="keyword">right</span>.equalTo(<span class="number">0.0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 下面的约束确定了containerView的高度，相当于contentSize.height已经确定，width通过cotnentView的子视图确定即可</span></span><br><span class="line">        <span class="keyword">self</span>.containerView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.edges.equalTo(<span class="number">0.0</span>)</span><br><span class="line">            make.height.equalTo(<span class="keyword">self</span>.scrollView.snp.height)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.firstImageView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.<span class="keyword">left</span>.bottom.equalTo(<span class="number">0.0</span>)</span><br><span class="line">            make.width.equalTo(<span class="keyword">self</span>.scrollView.snp.width)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.secondImageView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.bottom.equalTo(<span class="number">0.0</span>)</span><br><span class="line">            make.<span class="keyword">left</span>.equalTo(<span class="keyword">self</span>.firstImageView.snp.<span class="keyword">right</span>)</span><br><span class="line">            make.width.equalTo(<span class="keyword">self</span>.scrollView.snp.width)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.thirthImageView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.bottom.equalTo(<span class="number">0.0</span>)</span><br><span class="line">            make.<span class="keyword">left</span>.equalTo(<span class="keyword">self</span>.secondImageView.snp.<span class="keyword">right</span>)</span><br><span class="line">            make.width.equalTo(<span class="keyword">self</span>.scrollView.snp.width)</span><br><span class="line">            make.<span class="keyword">right</span>.equalTo(<span class="number">0.0</span>) <span class="comment">// 确定右边距</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - 私有属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> scrollView:<span class="type">UIScrollView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIScrollView</span>()</span><br><span class="line">        temp.isPagingEnabled = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> containerView:<span class="type">UIView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIView</span>()</span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> firstImageView:<span class="type">UIImageView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: <span class="string">"1"</span>)</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIImageView</span>(image:image)</span><br><span class="line">        temp.contentMode = .scaleAspectFill</span><br><span class="line">        temp.clipsToBounds = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> secondImageView:<span class="type">UIImageView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: <span class="string">"2"</span>)</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIImageView</span>(image:image)</span><br><span class="line">        temp.contentMode = .scaleAspectFill</span><br><span class="line">        temp.clipsToBounds = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> thirthImageView:<span class="type">UIImageView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: <span class="string">"3"</span>)</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIImageView</span>(image:image)</span><br><span class="line">        temp.contentMode = .scaleAspectFill</span><br><span class="line">        temp.clipsToBounds = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="demo3-多个子视图不使用containerView布局"><a href="#demo3-多个子视图不使用containerView布局" class="headerlink" title="demo3 多个子视图不使用containerView布局"></a>demo3 多个子视图不使用containerView布局</h3><p>demo2的containerView包含多个子视图的布局方式相对来说好像使用要多一些，但是其实布局原理并没有任何变化，如果熟悉了UIScrollView的AutoLayout布局原理，用不用containerView大家可以根据情况自行决定，如果仅仅是简单的几个子视图布局没有特殊的需求那么直接布局可能会更简单，但是如果子视图相对较多并且可能所有子视图有公共的操作需求（例如所有子视图在键盘弹出后需要改变其位置）则更适合使用containerView布局。下面代码中去掉containerView完成demo2的需求，原理相同，代码也不难理解。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SlideViewController2</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.automaticallyAdjustsScrollViewInsets = <span class="literal">false</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.view.addSubview(<span class="keyword">self</span>.scrollView)</span><br><span class="line">        <span class="keyword">self</span>.scrollView.addSubview(<span class="keyword">self</span>.firstImageView)</span><br><span class="line">        <span class="keyword">self</span>.scrollView.addSubview(<span class="keyword">self</span>.secondImageView)</span><br><span class="line">        <span class="keyword">self</span>.scrollView.addSubview(<span class="keyword">self</span>.thirthImageView)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.scrollView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.equalTo(<span class="keyword">self</span>.topLayoutGuide.snp.bottom)</span><br><span class="line">            make.<span class="keyword">left</span>.bottom.<span class="keyword">right</span>.equalTo(<span class="number">0.0</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.firstImageView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.<span class="keyword">left</span>.bottom.equalTo(<span class="number">0.0</span>)</span><br><span class="line">            make.size.equalTo(<span class="keyword">self</span>.scrollView.snp.size)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.secondImageView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.bottom.equalTo(<span class="number">0.0</span>)</span><br><span class="line">            make.<span class="keyword">left</span>.equalTo(<span class="keyword">self</span>.firstImageView.snp.<span class="keyword">right</span>)</span><br><span class="line">            make.size.equalTo(<span class="keyword">self</span>.scrollView.snp.size)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.thirthImageView.snp.makeConstraints &#123; (make) <span class="keyword">in</span></span><br><span class="line">            make.top.bottom.equalTo(<span class="number">0.0</span>)</span><br><span class="line">            make.<span class="keyword">left</span>.equalTo(<span class="keyword">self</span>.secondImageView.snp.<span class="keyword">right</span>)</span><br><span class="line">            make.size.equalTo(<span class="keyword">self</span>.scrollView.snp.size)</span><br><span class="line">            make.<span class="keyword">right</span>.equalTo(<span class="number">0.0</span>) <span class="comment">// 确定右边距</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MARK: - 私有属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> scrollView:<span class="type">UIScrollView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIScrollView</span>()</span><br><span class="line">        temp.isPagingEnabled = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> firstImageView:<span class="type">UIImageView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: <span class="string">"1"</span>)</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIImageView</span>(image:image)</span><br><span class="line">        temp.contentMode = .scaleAspectFill</span><br><span class="line">        temp.clipsToBounds = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> secondImageView:<span class="type">UIImageView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: <span class="string">"2"</span>)</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIImageView</span>(image:image)</span><br><span class="line">        temp.contentMode = .scaleAspectFill</span><br><span class="line">        temp.clipsToBounds = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> thirthImageView:<span class="type">UIImageView</span> = &#123;</span><br><span class="line">        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: <span class="string">"3"</span>)</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="type">UIImageView</span>(image:image)</span><br><span class="line">        temp.contentMode = .scaleAspectFill</span><br><span class="line">        temp.clipsToBounds = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span> temp</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h3>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实概括起来UIScrollView的布局最主要的问题就是解决contentSize的计算问题。而根据UIScrollView的特点contentSize的计算最终就是根据上下左右边距和子控件自身尺寸来反向推导出来的。在遇到多个子视图的情况下具体用不用容器视图根据情况而定，容器视图仅仅起到辅助作用，整个布局原理是完全相同的。使用UIScrollView的AutoLayout布局优点自不必多说，除了从frame计算中摆脱出来之外（绝对布局和相对布局的区别），天生支持屏幕旋转（屏幕的旋转适配只需要在布局时稍加注意即可），例如上面三个demo均支持竖屏和横屏查看，相对于frame布局代码简化了很多。</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/25/iOS开发tips-UITableView、UICollectionView行高-尺寸自适应/" title="iOS开发tips-UITableView、UICollectionView行高/尺寸自适应">iOS开发tips-UITableView、UICollectionView行高/尺寸自适应</a></h2>
+                <p class="excerpt">
+                
+                UITableView我们都知道UITableView从iOS 8开始实现行高的自适应相对比较简单，首先必须设置estimatedRowHeight给出预估高度，设置rowHeight为UITableViewAutomaticDimension（注意：如果不修改rowHeight默认就是UITabl
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-25T02:56:23.000Z" class="post-list__meta--date date">2017-02-25</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/AutoLayout/">AutoLayout</a>
+</span><a class="btn-border-small" href="/2017/02/25/iOS开发tips-UITableView、UICollectionView行高-尺寸自适应/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+        
+     
+   
+   
+  
+</section>
+
+  
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'kenshincui'; 
+      
+  var disqus_identifier = '/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/';
+  var disqus_title = 'iOS开发tips-UIScrollView的Autlayout布局';
+  var disqus_url = 'http://yoursite.com/2017/02/23/iOS开发tips-UIScrollView的Autlayout布局/';
+  
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          //dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          dsq.src = 'https://a.disquscdn.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2020 - 本站使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题,
+        由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>
