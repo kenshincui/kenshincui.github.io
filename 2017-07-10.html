@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Kenshin Cui&#39;s Blog | 即便是别人看不到的地方, 对其工艺也必须尽心尽力。</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="iOS Developer">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Kenshin Cui&#39;s Blog | 即便是别人看不到的地方, 对其工艺也必须尽心尽力。">
+    <meta name="twitter:description" content="iOS Developer">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Kenshin Cui&#39;s Blog | 即便是别人看不到的地方, 对其工艺也必须尽心尽力。">
+    <meta property="og:description" content="iOS Developer">
+
+    
+    <meta name="author" content="Kenshin Cui">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2017-07-10.html"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Kenshin Cui&#39;s Blog 的主页"><img src="/images/avatar.jpg" width="80" alt="Kenshin Cui&#39;s Blog logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Kenshin Cui&#39;s Blog">Kenshin Cui&#39;s Blog</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">即便是别人看不到的地方, 对其工艺也必须尽心尽力。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">iOS Developer</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+              <li class="navigation__item"><a href="/archive">归档</a></li>
+            
+              <li class="navigation__item"><a href="/about">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/kenshincui" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-green"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <section class="post">
+    <h1 id="App安装包瘦身"><a href="#App安装包瘦身" class="headerlink" title="App安装包瘦身"></a>App安装包瘦身</h1><h2 id="安装包的差异"><a href="#安装包的差异" class="headerlink" title="安装包的差异"></a>安装包的差异</h2><p>安装包.ipa本质是一个zip压缩包，其中包含的最重要的文件是Payload（里面包含.app），此外还有压缩meta数据、iTunes描述配置信息。<br>而Payload中的.app是编译后的文件，是一个未经压缩的包（相当于一个bundle），里面包含程序可执行文件（Unix executable）、资源文件（包括图片/文本/storyboard/bundle等资源、swift或者第三方库、plist配置）、PlugIns(app extension)、签名文件（CodeResources）。</p>
+<p>如下图是图虫2.5.0 .app内容（解压后68.8M）：<br><img src="http://omhesitls.bkt.clouddn.com/appBundle.png" alt=""></p>
+<p>直接从iTunes下载图虫安装包.ipa大小为42M，相比于单独用iPhone 7在iTunes中查看40.3M要大一些，这中间的差异主要是因为compatible devices所造成的。另外如果直接从Xcode导出相关的.iPa包查看大小其实只有30.4M，这中间相差10M左右，关于这一点苹果官方也给出了解释：实际上苹果获取上传的.iPad后会解压，然后对二进制文件进行 FairPlay DRM加密压缩，最后重新生成.iPad（这也解释了为什么安装包上传到iTunes connect上之后无法直接提交，而是需要等待处理的原因）。</p>
+<h2 id="安装包瘦身"><a href="#安装包瘦身" class="headerlink" title="安装包瘦身"></a>安装包瘦身</h2><p>图虫2.5.0解压后得到的.app文件大小68.8M，分析占用空间较大的文件如下：<br>Frameworks(swift和第三方库):38M<br>Tuchong(二进制文件):18.4M<br>tuchong.mp4:6.4M<br>Plugins:2.9M<br>Assets.car(图片资源压缩包):1.8M<br>…<br>经过前面的分析优化安装包大小主要从移除无用文件、图片，优化图片压缩，尽可能移除一些第三方库（或使用其“精简版”），编译优化减小二进制文件大小等。</p>
+<h3 id="移除无用图片"><a href="#移除无用图片" class="headerlink" title="移除无用图片"></a>移除无用图片</h3><p>移除无用图片其实主要是扫描.swift、.m、.plist文件发现Assets中的文件名没有被引用则认为是无用图片资源，当然存在误报可能（比如说文件名是字符串拼接而成）所以删除时要确认确实无用再操作。这里推荐一个扫描工具<a href="https://github.com/tinymind/LSUnusedResources" target="_blank" rel="external">LSUnusedResources</a>性能是另一个扫描工具Unused的数倍。</p>
+<ol>
+<li>移除无用图片资源<br>下面是图虫2.5.x扫描的结果，确实发现了一些随着需求变动而造成的无用的图片资源：</li>
+</ol>
+<p><img src="http://omhesitls.bkt.clouddn.com/unuse_images.png" alt=""></p>
+<p>清理这些缓存文件后Assets.xcassets整体大小有2.8M降低到了2.6M，压缩包大小的Assets由1.8M降低到了1.7M</p>
+<blockquote>
+<p>Assets.car事实上是Assets.xcassets打包文件，通常相对于直接查看Assets.xcassets（提出.json和AppIcon等不打包到Assets.car中的文件）会稍微小一些（事实上如何能够合理的使用Assets.xcassets也是降低安装包大小的一种方式，图虫Assets.xcassets打包前2.8M，打包后1.8M）。</p>
+</blockquote>
+<ol>
+<li>优化图片压缩方式</li>
+</ol>
+<p>资源图片无损压缩优化推荐使用<a href="https://imageoptim.com/mac" target="_blank" rel="external">ImageOptim</a>，这个工具合并了OptiPNG、PNGCrush、AdvanceComp、PNGOUT、Jpegoptim+Jpegtran和Gifsicle等几个工具，旨在为设计师提供最好的优化效果。事实上Xcode在打包时本身就会对png资源进行优化，实验表明图虫2.5.x优化后资源从1.7M降低到了1.3M，而实际打包效果跟之前差别不大（几乎没有变化），所以如果合理利用png图片资源Xcode本身的压缩效果还是不错的。而对于jpg而言ImageOptim相对优势反而更明显一些。</p>
+<p>ImageOptim压缩效果：</p>
+<p><img src="http://omhesitls.bkt.clouddn.com/image_optim.png" alt=""></p>
+<p>比较优化前后打包生成的Assets.car，几乎没有任何变化，说明Xcode默认的优化其实还是不错的：</p>
+<p><img src="http://omhesitls.bkt.clouddn.com/imageoptim_unuse.png" alt=""></p>
+<p><img src="http://omhesitls.bkt.clouddn.com/imageoptim_use.png" alt=""></p>
+<ol>
+<li>移除无用的类</li>
+</ol>
+<ul>
+<li>未使用的对象<br>随着产品的迭代，产品中的类会越来越多，中间难免删删减减，造成一些类到最后可能已经不再使用。由于图虫目前几乎完全使用swift开发，所以这里可以借助一个检测swift文件的工具<a href="https://github.com/tsabend/fus/tree/master/spec" target="_blank" rel="external">fus</a> 安装如下：</li>
+</ul>
+<p><code>sudo gem install -n /usr/local/bin fus</code></p>
+<p>然后执行查找</p>
+<p><code>fus find</code></p>
+<p><img src="http://omhesitls.bkt.clouddn.com/unuse_class.png" alt=""></p>
+<p>fus是一种静态分析方式，可以分析出Swift、OC和Storyboard等未使用的类文件，可以作为一种参考，有误伤的可能（特别是对于framework即使当前没有使用也未必不需要，建议用于扫描业务模块）。</p>
+<blockquote>
+<p>如果考虑动态分析可以考虑使用otool <strong>objc_classrefs和otool </strong>objc_classlist求出二者差集即可（但是也存在一些坑，比如Storyboard、runtime调用等,此外OC可以使用Xcode unuse warning）</p>
+</blockquote>
+<ul>
+<li>对象占用大小</li>
+</ul>
+<p>随着产品迭代每个对象的也会越来越大，可能有些方法已经失去了意义但是还存在于对象当中，这是就有必要找出这些无用的类和方法，可以使用LinkMap文件统计出每个对象的占用大小，然后有针对性的进行排查。LinkMap是Xcode编译时生成的用于描述链接信息的文本文件，每个LinkMap分为三部分：</p>
+<p>Object files：编译生成的目标文件列表和对应编号<br>Sections：描述了文件的偏移量、大小、所属段（代码段、文本段、数据段等）、段名称等<br>Symbols：符号表，描述了每个obj文件在每个段的分布</p>
+<p>也就是说LinkMap描述了一个对象各个成员在每个段占用的大小，只要根据序号进行累加然后排除一些不占用可执行文件的字段（例如静态变量等如果未初始化占用的大小是堆内存，不占用可执行文件空间）即可计算出可执行文件大小。这里直接使用一个开源工具<a href="https://github.com/huanxsd/LinkMap" target="_blank" rel="external">LinkMap</a>对图虫客户端进行扫描：</p>
+<p><img src="http://omhesitls.bkt.clouddn.com/linkMap_armv7.png" alt=""></p>
+<blockquote>
+<p>查看LinkMap请使用release进行build（目前arm64，armv7基本就够用了），模拟器build和真机build差别很大。</p>
+</blockquote>
+<ol>
+<li>代码共用</li>
+</ol>
+<p>随着App Extension在iOS上的应用，App和Extension之间的代码共用对于提高安装包大小就有一定的意义了，通常的做法就是提取公共的代码到独立的Framework，举例来说目前TuchongKit是Tuchong App主要的基础库，大小6.7M左右，图虫另外有两个App Extension共用了TuchongKit之后App Extension安装包分别从1.2M和3.5M降低到了191K、2.8M。</p>
+<p><img src="http://omhesitls.bkt.clouddn.com/notification_extension_plugin.png" alt=""></p>
+<p><img src="http://omhesitls.bkt.clouddn.com/share_extension_plugin.png" alt=""></p>
+<blockquote>
+<p>关于App Extension的优化其实还包括访问资源的优化，其优化过程基本等同于App优化，不过注意对于公共Assets的方法，避免无用的资源引入到Extension中。</p>
+</blockquote>
+<ol>
+<li><p>Framework优化</p>
+<p>经过分析图虫2.5.x framework总大小38M，相比较于2.4.0增大了3.9M分别是React.framework 3.6M、yoga.framework 0.3M，主要是引入React Native的缘故。对于framework的优化大致分为如下几种情况：</p>
+<ul>
+<li>移除无用的第三方库或者有些调试库应该保证只在debug模式使用，release应该移除。另外当前JSON转模型使用的ObjectMapper.framework（1.3M），在升级Swift4.0后可以使用Codable更好的解决，升级后考虑移除。</li>
+<li>较大的第三方库的引入可以考虑移除未使用功能相关的源码文件或者使用其对应精简版，例如使用新浪精简版后可执行文件（新浪目前SDK是静态库）减小1.1M，实际安装包减小0.35M</li>
+<li>尽量减少重复功能的库，例如Alamofire.framework目前已经包含了网络监控的功能，就不必要引入Reachability.framework，可以减少0.4M左右。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p> 注意：由于swift目前abi还未稳定，要求所有swift开发的app必须copy标准库到安装包中，目前图虫版本中包含了17.6M的swift标准库。</p>
+</blockquote>
+<ol>
+<li>编译选项优化</li>
+</ol>
+<p>Symbols Hidden by Default：Release模式下YES，降低符号信息占用<br>Strip Linked Product：YES，部署时移除符号信息（Release模式下Deployment Postprocessing：YES，事实上Archive时如果是Install会自动修改这个值为YES）<br>Strip Debug Symbols During Copy:Release模式下YES，移除调用的第三方库的符号信息<br>Make Strings Read-Only:YES，重用string literals<br>Optimization Level：Debug模式下应该选择Fast,Smallest或者Fast，Aggressive Optimizations</p>
+<blockquote>
+<p>更多<a href="http://www.xs-labs.com/en/blog/2011/02/04/xcode-build-settings/" target="_blank" rel="external">Xcode setting </a></p>
+</blockquote>
+<p>6.Slicing（App Thinning）<br>Slicing功能允许开发者为不同的设备提供不同的安装包，这一样一来无论是Assets Catelog里的图片会按照不同的分辨率分配到不同的设备安装包中，而且GPU使用也会针对不同的设备进行优化。</p>
+<p><img src="http://omhesitls.bkt.clouddn.com/slicing.png" alt=""></p>
+<p>图虫Slicing后的效果：</p>
+<p><img src="http://omhesitls.bkt.clouddn.com/tuchong_slicing.png" alt=""></p>
+<blockquote>
+<p>所有App Thinning 最低支持iOS 9 deploy（符合条件自动启用），更低版本的部署无法使用。另外<strong>On-Demand</strong>也是一种降低安装包的有效手段，目前被众多游戏app所使用。</p>
+</blockquote>
+<ol>
+<li>Bitcode</li>
+</ol>
+<p>Bitcode是介于前端语言（例如OC、Swift等）和机器语言之间LLVM编译的一种中间码，启用Xcode 启用Bitcode后在打包上传时会叫中间码传到苹果的中心服务器，中心服务器根据不同的芯片架构创建不同的可执行程序共用时下载，从而变相降低了可执行文件的大小（不用兼容不同的处理器架构）。不过使用Bitcode之后需要注意由于最终二进制文件在苹果服务器端生成，所以打包时的符号表就无法对应到最终安装程序中，如果要想获取正确的符号表需要在上传时选择上传符号表这样就可以在iTunes Connect中下载对应的符号表了。</p>
+<h2 id="最终优化效果"><a href="#最终优化效果" class="headerlink" title="最终优化效果"></a>最终优化效果</h2><p><img src="http://omhesitls.bkt.clouddn.com/tuchong_optimize.png" alt=""></p>
+
+  </section>
+</article>
+
+
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'kenshincui'; 
+      
+  var disqus_identifier = '/2017-07-10.html';
+  var disqus_title = '';
+  var disqus_url = 'http://yoursite.com/2017-07-10.html';
+  
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          //dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          dsq.src = 'https://a.disquscdn.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2020 - 本站使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题,
+        由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>
